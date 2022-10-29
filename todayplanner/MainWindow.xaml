@@ -5,27 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:todayplanner"
         mc:Ignorable="d"
-        Title="Planner" Height="600" Width="1000" WindowStartupLocation="CenterScreen" FontSize="25" ResizeMode="NoResize" >
-    <Grid Background="#FF002B36" Height="600" Width="1000">
-        <Label Content="Day Planner" VerticalAlignment="Top" HorizontalContentAlignment="Center" Foreground="AliceBlue" Height="50" FontSize="30"/>
-        <Rectangle Fill="Red" Height="270" Width="500" Margin="0,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <Rectangle Fill="Yellow" Height="270" Width="500" Margin="0,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
-        <Rectangle Fill="Green" Height="270" Width="500" Margin="0,60,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
-        <Rectangle Fill="Blue" Height="270" Width="500" Margin="0,60,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+        Title="Planner" Height="635" Width="1016" WindowStartupLocation="CenterScreen" FontSize="25" ResizeMode="NoResize" >
+    <Grid Name="Main" Background="#FF002B36" Height="600" Width="1000">
+        <TabControl Background="Black" >
 
-        <Rectangle Fill="#FF096D82" Height="10" VerticalAlignment="Top" Margin="0,60,0,0" />
-        <Rectangle Fill="#FF096D82" Height="10" VerticalAlignment="Center" Margin="0,60,0,0" />
-        <Rectangle Fill="#FF096D82" Height="520" Width="10" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,67,0,0" />
+            <TabItem Header="Текущие задания">
+                <Grid Background="#FF002B36">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <Label Content="Срочно и важно" Foreground="White" HorizontalAlignment="Center"/>
+                        <ListBox Name="ListBox1"  Background="Transparent" Foreground="White" FontSize="15" MouseDoubleClick="ListBox1_MouseDoubleClick" ></ListBox>
+                        
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="1">
+                        <Label Content="Не срочно и важно" Foreground="White" HorizontalAlignment="Center"/>
+                        <ListBox Name="ListBox2"  Background="Transparent" Foreground="White" FontSize="15"></ListBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <Label Content="Срочно и не важно" Foreground="White" HorizontalAlignment="Center"/>
+                        <ListBox Name="ListBox3"  Background="Transparent" Foreground="White" FontSize="15"></ListBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <Label Content="Не срочно и не важно" Foreground="White" HorizontalAlignment="Center"/>
+                        <ListBox Name="ListBox4"  Background="Transparent" Foreground="White" FontSize="15"></ListBox>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Добавить новое задание">
+                <Grid Background="#FF002B36">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <TextBlock Text="Впишите сюда задание, которое хотите добавить" Margin="20" Foreground="AliceBlue" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" />
+                        <ComboBox Name="message_type"  Margin="35"  Width="220" Background="White">
+                            <ComboBoxItem >
+                                <TextBlock >Срочно и важно</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem >
+                                <TextBlock>Не срочно и важно</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock>Срочно и не важно</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem >
+                                <TextBlock>Не срочно и не важно</TextBlock>
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <RichTextBox Name="Content_box" HorizontalContentAlignment="Left" FontSize="35"  Grid.Row="1" Background="#FF00222B" Foreground="White"/>
+                    <Button Content="Добавить" Grid.Row="2" Margin="30" Width="300" Background="AliceBlue" Click="Button_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <Button Width="300" Content ="Удалить" Click="Delete_selected"></Button>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+            </TabItem>
+        </TabControl>
 
-        <Label Foreground="White" Content="Важно и срочно" HorizontalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="128,72,0,0" />
-        <Label Foreground="White" Content="Неважно и  срочно" HorizontalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="112,333,0,0" />
-        <Label Foreground="White" Content="Неважно и несрочно" HorizontalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,333,112,0" />
-        <Label  Content="Важно и несрочно" HorizontalContentAlignment="Center"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,72,112,0" />
-        <ListBox x:Name="listbox1" FontSize="17" Background="Red" Foreground="White" Margin="12,115,526,334" SelectionMode="Extended">
-
-        </ListBox>
-        <TextBox FontSize="15" x:Name="TextBox1" Background="#FFFF5F5F"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White"  Height="30" Width="320" Margin="10,284,690,286" />
-        <Button Content="Add" Click="Add" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" Height="30" Width="50" Margin="345,277,605,277" />
-        <Button Click="Remove" Content="Remove" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="13" Height="30" Width="50" Margin="417,277,533,277" />
     </Grid>
 </Window>
